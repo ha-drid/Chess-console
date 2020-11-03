@@ -12,11 +12,7 @@ Board board;
 int main()
 {
 	setlocale(LC_ALL, "ru");
-	//system("Color 70");
-	//for (int i = 0; i < 500; ++i) {
-	//	setColor(i);
-	//	std::cout << i << "text  ";
-	//}
+	
 	try
 	{
 		while (1) 
