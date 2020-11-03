@@ -12,7 +12,7 @@ Board board;
 int main()
 {
 	setlocale(LC_ALL, "ru");
-	
+	//Беконечный цикл потом исправлю
 	try
 	{
 		while (1) 
