@@ -1,0 +1,93 @@
+#pragma once
+
+#ifndef SIZE
+
+/*
+* В этом файле будуть фунции и переменые которые не впсисваются в другие файлы,
+* это делаеться чтобы не засорять другие файлы и чтобы код не дублировался
+*/
+
+#include <conio.h>
+#include <iostream>
+#include <Windows.h>
+
+static HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
+#define width 8
+#define height 8
+
+static char chess_f[6][3] = { { ' ','P','p' }, 
+						      { ' ','R','r' }, 
+							  { ' ','C','c' },
+							  { ' ','B','b' },
+							  { ' ','Q','q' },
+							  { ' ','K','k' } };
+
+static void Symbol_Identy(int &x)
+{
+	switch (x)
+	{
+	case(97):  std::cout << "a\n" ; x = 0; break;
+	case(98):  std::cout << "b\n" ; x = 1; break;
+	case(99):  std::cout << "c\n" ; x = 2; break;
+	case(100): std::cout << "d\n" ; x = 3; break;
+	case(101): std::cout << "e\n" ; x = 4; break;
+	case(102): std::cout << "f\n" ; x = 5; break;
+	case(103): std::cout << "g\n" ; x = 6; break;
+	case(104): std::cout << "h\n" ; x = 7; break;
+	}
+}
+
+static void Number_Identy(int &y)
+{
+	switch (y)
+	{
+	case(49): std::cout << "1\n"; y = 0; break;
+	case(50): std::cout << "2\n"; y = 1; break;
+	case(51): std::cout << "3\n"; y = 2; break;
+	case(52): std::cout << "4\n"; y = 3; break;
+	case(53): std::cout << "5\n"; y = 4; break;
+	case(54): std::cout << "6\n"; y = 5; break;
+	case(55): std::cout << "7\n"; y = 6; break;
+	case(56): std::cout << "8\n"; y = 7; break;
+	}
+}
+
+static void setColor(int color)
+{
+	SetConsoleTextAttribute(hConsole, color);
+	return;
+}
+
+static void MoveFigureInput(int& x_move, int& y_move, std::string figure_name, int Color)
+{
+	if (Color == 1)
+		std::cout << "Под вашим управлением белая " << figure_name << std::endl;
+	else if (Color == 2)
+		std::cout << "Под вашим управлением черная " << figure_name << std::endl;
+
+	std::cout << "Ведите x кординаты:";
+	x_move = _getch();
+	Symbol_Identy(x_move);
+
+	if ((x_move > -1) && (x_move < 8)) {
+		std::cout << "Ведите y кординаты:";
+		y_move = _getch();
+		Number_Identy(y_move);
+		if ((y_move > -1) && (y_move < 8)) {
+
+		}
+		else {
+			std::cout << "Вы неверно вели y кординату\n";
+		}
+	}
+	else {
+		std::cout << "Вы неверно вели х кординату\n";
+	}
+}
+
+const int WHITE = 1;
+const int BLACK = 2;
+
+#define SIZE
+#endif // !SIZE
