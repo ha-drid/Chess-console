@@ -11,18 +11,20 @@
 #include <iostream>
 #include <Windows.h>
 
-static HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-
+//глобалная переменая размер доски и номер цвета фигуры
 #define width 8
 #define height 8
+const int WHITE = 1;
+const int BLACK = 2;
 
+//символы фигур 
 static char chess_f[6][3] = { { ' ','P','p' }, 
 						      { ' ','R','r' }, 
 							  { ' ','C','c' },
 							  { ' ','B','b' },
 							  { ' ','Q','q' },
 							  { ' ','K','k' } };
-
+//через функцию getch() мы будем узнавать нажатие на кнопки клавиатуры
 static void Symbol_Identy(int &x)
 {
 	switch (x)
@@ -52,13 +54,14 @@ static void Number_Identy(int &y)
 	case(56): std::cout << "8\n"; y = 7; break;
 	}
 }
-
+//покраска доски
+static HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 static void setColor(int color)
 {
 	SetConsoleTextAttribute(hConsole, color);
 	return;
 }
-
+//эта функция запрашивает пользователя куда нужно ходить
 static void MoveFigureInput(int& x_move, int& y_move, std::string figure_name, int Color)
 {
 	if (Color == 1)
@@ -85,9 +88,6 @@ static void MoveFigureInput(int& x_move, int& y_move, std::string figure_name, i
 		std::cout << "Вы неверно вели х кординату\n";
 	}
 }
-
-const int WHITE = 1;
-const int BLACK = 2;
 
 #define SIZE
 #endif // !SIZE
