@@ -12,10 +12,9 @@ Board board;
 int main()
 {
 	setlocale(LC_ALL, "ru");
-	//Беконечный цикл потом исправлю
 	try
 	{
-		while (1) 
+		while(1)
 		{
 			board.init(map);
 			board.show(map);
@@ -23,7 +22,6 @@ int main()
 			Sleep(1000);
 			system("cls");
 		}
-		std::cout << "s";
 	}
 	catch (const std::runtime_error& e)
 	{

@@ -57,3 +57,14 @@ public:
 	void getMove(int x_pos, int y_pos, char arr[height][width + 1]) override;
 	~Cavalary() {}
 };
+
+class Queen :public ChessMan
+{
+public:
+	Queen() {}
+	void init(int x, int y, int Color) override;
+	void put(char arr[height][width + 1]) override;
+	void getMove(int x_pos, int y_pos, char arr[height][width + 1]) override;
+	~Queen() {}
+};
+

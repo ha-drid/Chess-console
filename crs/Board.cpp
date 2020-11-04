@@ -4,6 +4,8 @@ Board::Board()
 {
 	f1 = NULL;
 	f2 = NULL;
+	
+	//инитиализация фигур
 
 	/**Белые фигуры**/
 	for (int i = 0; i < 8; ++i) {
@@ -15,6 +17,7 @@ Board::Board()
 	bishop[1].init(5, 0, WHITE);
 	cavalary[0].init(6, 0, WHITE);
 	cavalary[1].init(1, 0, WHITE);
+	queen[0].init(4, 0, WHITE);
 
 	/**Черные фигуры**/
 	for (int i = 8; i < 16; ++i) {
@@ -26,6 +29,7 @@ Board::Board()
 	bishop[3].init(5, 7, BLACK);
 	cavalary[2].init(6, 7, BLACK);
 	cavalary[3].init(1, 7, BLACK);
+	queen[1].init(4, 7, BLACK);
 }
 
 
@@ -38,10 +42,10 @@ void Board::init(char arr[height][width + 1])
 			arr[n][i] = ' ';
 		}
 	}
-
 	for (int i = 0; i < 8; ++i)
 		arr[i][width] = '1' + i;
 	
+	//вывод фигур
 	for (int i = 0; i < 16; ++i)
 		pawn[i].put(arr);
 	
@@ -49,6 +53,10 @@ void Board::init(char arr[height][width + 1])
 		rook[i].put(arr);
 		bishop[i].put(arr);
 		cavalary[i].put(arr);
+	}
+
+	for (int i = 0; i < 2; ++i) {
+		queen[i].put(arr);
 	}
 }
 
@@ -107,7 +115,6 @@ void Board::move_figure(char arr[height][width + 1])
 
 	//std::cout << x_pos << std::endl;
 	//std::cout << y_pos << std::endl;
-
 	for (int i = 0; i < 16; ++i) {
 		pawn[i].getMove(x_pos, y_pos, arr);
 	}
@@ -116,8 +123,13 @@ void Board::move_figure(char arr[height][width + 1])
 	{
 		rook[i].getMove(x_pos, y_pos, arr);
 		bishop[i].getMove(x_pos, y_pos, arr);
+		cavalary[i].getMove(x_pos, y_pos, arr);
 	}
 
+	for (int i = 0; i < 2; ++i)
+	{
+		queen[i].getMove(x_pos, y_pos, arr);
+	}
 
 	for (int i = 0; i < 16; ++i) 
 	{
@@ -126,14 +138,22 @@ void Board::move_figure(char arr[height][width + 1])
 			figure_colision_check(&pawn[i], &pawn[n]);
 			figure_colision_check(&rook[i % 4], &rook[n % 4]);
 			figure_colision_check(&bishop[i % 4], &bishop[n % 4]);
-
+			figure_colision_check(&cavalary[i % 4], &cavalary[n % 4]);
 
 			figure_colision_check(&rook[i % 4], &pawn[n]);
 			figure_colision_check(&bishop[i % 4], &pawn[n]);
+			figure_colision_check(&cavalary[i % 4], &pawn[n]);
+			figure_colision_check(&queen[i % 2], &pawn[n]);
 
 			figure_colision_check(&rook[i % 4], &bishop[n % 4]);
+			figure_colision_check(&rook[i % 4], &cavalary[n % 4]);
+			figure_colision_check(&cavalary[i % 4], &bishop[n % 4]);
+			figure_colision_check(&queen[i % 2], &bishop[n % 4]);
+			figure_colision_check(&queen[i % 2], &rook[n % 4]);
+			figure_colision_check(&queen[i % 2], &cavalary[n % 4]);
 		}
 	}
+	figure_colision_check(&queen[0], &queen[1]);
 }
 
 void Board::figure_colision_check(ChessMan* f1, ChessMan* f2)

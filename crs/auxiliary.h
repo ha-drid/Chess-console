@@ -62,33 +62,6 @@ static void setColor(int color)
 	SetConsoleTextAttribute(hConsole, color);
 	return;
 }
-//эта функция запрашивает пользователя куда нужно ходить
-static void MoveFigureInput(int& x_move, int& y_move, std::string figure_name, int Color)
-{
-	if (Color == 1)
-		std::cout << "Ïîä âàøèì óïðàâëåíèåì áåëàÿ " << figure_name << std::endl;
-	else if (Color == 2)
-		std::cout << "Ïîä âàøèì óïðàâëåíèåì ÷åðíàÿ " << figure_name << std::endl;
-
-	std::cout << "Âåäèòå x êîðäèíàòû:";
-	x_move = _getch();
-	Symbol_Identy(x_move);
-
-	if ((x_move > -1) && (x_move < 8)) {
-		std::cout << "Âåäèòå y êîðäèíàòû:";
-		y_move = _getch();
-		Number_Identy(y_move);
-		if ((y_move > -1) && (y_move < 8)) {
-
-		}
-		else {
-			std::cout << "Âû íåâåðíî âåëè y êîðäèíàòó\n";
-		}
-	}
-	else {
-		std::cout << "Âû íåâåðíî âåëè õ êîðäèíàòó\n";
-	}
-}
 
 #define SIZE
 #endif // !SIZE

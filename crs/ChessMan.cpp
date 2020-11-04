@@ -49,7 +49,6 @@ void Pawn::getMove(int x_pos, int y_pos, char arr[height][width + 1])
 					x = x_move;
 					y = y_move;
 					isAttack = true;
-					std::cout << "мы схавали\n";
 				}
 		}
 	}
@@ -91,7 +90,7 @@ void Rook::getMove(int x_pos, int y_pos, char arr[height][width + 1])
 		if ((x != x_move) && (y == y_move))
 			Rook_Move_X(x, y, x_move, y_move, arr, Color, Enemy, isAttack);
 		else if ((x == x_move) && (y != y_move))
-			Rook_Move_Y(x, y, x_move, y_move, arr, Color, Enemy, isAttack);;
+			Rook_Move_Y(x, y, x_move, y_move, arr, Color, Enemy, isAttack);
 	}
 }
 
@@ -154,5 +153,87 @@ void Cavalary::put(char arr[height][width + 1])
 }
 
 void Cavalary::getMove(int x_pos, int y_pos, char arr[height][width + 1]) {
+	if ((x_pos == x) && (y_pos == y) && (isBoard))
+	{
+		int x_move, y_move;
+		int Enemy, * p_Color = &Enemy;
 
+		if (Color == WHITE)
+			*p_Color = BLACK;
+		else if (Color == BLACK)
+			*p_Color = WHITE;
+
+		MoveFigureInput(x_move, y_move, "Кавалерия", Color);
+		if (((y == y_move + 2) || (y == y_move - 2)) && ((x == x_move + 1) || (x == x_move - 1)))
+		{
+			if (arr[y_move][x_move] == ' ') {
+				x = x_move;
+				y = y_move;
+			}
+			for (int i = 0; i < 5; ++i){
+				if (arr[y_move][x_move] == chess_f[i][Enemy]) {
+					x = x_move;
+					y = y_move;
+					isAttack = true;
+				}
+			}
+		}
+		if (((y == y_move + 1) || (y == y_move - 1)) && ((x == x_move + 2) || (x == x_move - 2)))
+		{
+			if (arr[y_move][x_move] == ' ') {
+				x = x_move;
+				y = y_move;
+			}
+			for (int i = 0; i < 5; ++i) {
+				if (arr[y_move][x_move] == chess_f[i][Enemy]) {
+					x = x_move;
+					y = y_move;
+					isAttack = true;
+				}
+			}
+		}
+	}
+}
+
+void Queen::init(int x, int y, int Color)
+{
+	this->x = x;
+	this->y = y;
+	this->Color = Color;
+	isAttack = false;
+	isBoard = true;
+}
+
+void Queen::put(char arr[height][width + 1])
+{
+	if (isBoard)
+	{
+		if (Color == WHITE)
+			arr[y][x] = chess_f[4][Color];
+		else if (Color == BLACK)
+			arr[y][x] = chess_f[4][Color];
+	}
+}
+
+void Queen::getMove(int x_pos, int y_pos, char arr[height][width + 1])
+{
+	if ((x_pos == x) && (y_pos == y) && (isBoard))
+	{
+		int x_move, y_move;
+		int Enemy, * p_Color = &Enemy;
+
+		if (Color == WHITE)
+			*p_Color = BLACK;
+		else if (Color == BLACK)
+			*p_Color = WHITE;
+
+		MoveFigureInput(x_move, y_move, "Королева", Color);
+
+		if ((x != x_move) && (y == y_move))
+			Rook_Move_X(x, y, x_move, y_move, arr, Color, Enemy, isAttack);
+		else if ((x == x_move) && (y != y_move))
+			Rook_Move_Y(x, y, x_move, y_move, arr, Color, Enemy, isAttack);
+		else if (((x + y) == (x_move + y_move)) || ((x - y) == (x_move - y_move)))
+			Bishop_Move(x, y, x_move, y_move, arr, Color, Enemy, isAttack);
+	}
 }

@@ -9,6 +9,31 @@
 
 #include "auxiliary.h"
 
+//эта функция запрашивает пользователя куда нужно ходить
+static void MoveFigureInput(int& x_move, int& y_move, std::string figure_name, int Color)
+{
+	std::cout << "Под вашим контролем " << figure_name << std::endl;
+
+	std::cout << "Ведите кординаты по x: ";
+	x_move = _getch();
+	Symbol_Identy(x_move);
+
+	if ((x_move > -1) && (x_move < 8)) {
+		std::cout << "Ведите кординаты по y: ";
+		y_move = _getch();
+		Number_Identy(y_move);
+		if ((y_move > -1) && (y_move < 8)) {
+			
+		}
+		else {
+			std::cout << "Вы неправильно вели кординаты\n";
+		}
+	}
+	else {
+		std::cout << "Вы неправильно вели кординаты\n";
+	}
+}
+
 static void Rook_Move_X(int& x, int& y, int x_move, int y_move, char arr[height][width + 1], int Color, int Enemy, bool& isAttack) {
 	int iX = x;
 	int min, max, cnt;
@@ -211,4 +236,4 @@ static void Bishop_Move(int& x, int& y, int x_move, int y_move, char arr[height]
 	}
 }
 #define MOVE_FIGURE_METHOD
-#endif // !MOVE_FIGURE_METHOD
+#endif // !MOVE_FIGURE_METHOD//
