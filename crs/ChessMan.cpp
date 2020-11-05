@@ -237,3 +237,53 @@ void Queen::getMove(int x_pos, int y_pos, char arr[height][width + 1])
 			Bishop_Move(x, y, x_move, y_move, arr, Color, Enemy, isAttack);
 	}
 }
+
+void King::init(int x, int y, int Color)
+{
+	this->x = x;
+	this->y = y;
+	this->Color = Color;
+	isAttack = false;
+	isBoard = true;
+}
+
+void King::put(char arr[height][width + 1])
+{
+	if (isBoard)
+	{
+		if (Color == WHITE)
+			arr[y][x] = chess_f[5][Color];
+		else if (Color == BLACK)
+			arr[y][x] = chess_f[5][Color];
+	}
+}
+
+void King::getMove(int x_pos, int y_pos, char arr[height][width + 1])
+{
+	if ((x_pos == x) && (y_pos == y) && (isBoard))
+	{
+		int x_move, y_move;
+		int Enemy, * p_Color = &Enemy;
+
+		if (Color == WHITE)
+			*p_Color = BLACK;
+		else if (Color == BLACK)
+			*p_Color = WHITE;
+
+		MoveFigureInput(x_move, y_move, "Король", Color);
+
+		if (((x == x_move) || (x == x_move + 1) || (x_move - 1)) && ((y == y_move) || (y == y_move + 1) || (y_move - 1)))
+		{
+			if (arr[y_move][x_move] == ' ') {
+				x = x_move;
+				y = y_move;
+			}
+			for(int i = 0;i < 5;++i)
+				if (arr[y_move][x_move] == chess_f[i][Enemy]) {
+					isAttack = true;
+					x = x_move;
+					y = y_move;
+				}
+		}
+	}
+}

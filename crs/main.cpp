@@ -14,13 +14,17 @@ int main()
 	setlocale(LC_ALL, "ru");
 	try
 	{
+		int n = WHITE;
 		while(1)
 		{
+			if(n == 3)
+				n %= 2;
 			board.init(map);
-			board.show(map);
-			board.move_figure(map);
+			board.show(map, n);
+			board.move_figure(map, n);
 			Sleep(1000);
 			system("cls");
+			++n;
 		}
 	}
 	catch (const std::runtime_error& e)

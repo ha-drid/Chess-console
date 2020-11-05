@@ -18,6 +18,7 @@ Board::Board()
 	cavalary[0].init(6, 0, WHITE);
 	cavalary[1].init(1, 0, WHITE);
 	queen[0].init(4, 0, WHITE);
+	king[0].init(3, 0, WHITE);
 
 	/**Черные фигуры**/
 	for (int i = 8; i < 16; ++i) {
@@ -30,6 +31,7 @@ Board::Board()
 	cavalary[2].init(6, 7, BLACK);
 	cavalary[3].init(1, 7, BLACK);
 	queen[1].init(4, 7, BLACK);
+	king[1].init(3, 7, BLACK);
 }
 
 
@@ -57,10 +59,11 @@ void Board::init(char arr[height][width + 1])
 
 	for (int i = 0; i < 2; ++i) {
 		queen[i].put(arr);
+		king[i].put(arr);
 	}
 }
 
-void Board::show(char arr[height][width + 1])
+void Board::show(char arr[height][width + 1],int Color)
 {
 	char S = 'a';
 	for (int i = 0; i < 8; ++i) {
@@ -70,22 +73,44 @@ void Board::show(char arr[height][width + 1])
 	}
 	std::cout << std::endl;
 	
-
-	for (int i = height - 1; i >= 0; --i)
-	{
-		for (int n = 0; n < width; ++n)
+	if (Color == WHITE) {
+		for (int i = height - 1; i >= 0; --i)
 		{
-			if ((n + i) % 2 == 0) {
-				setColor(128);
-				std::cout << " " << arr[i][n] << " ";
+			for (int n = 0; n < width; ++n)
+			{
+				if ((n + i) % 2 == 0) {
+					setColor(128);
+					std::cout << " " << arr[i][n] << " ";
+				}
+				else {
+					setColor(8);
+					std::cout << " " << arr[i][n] << " ";
+				}
+				if (n == width - 1) {
+					setColor(8);
+					std::cout << ' ' << arr[i][width] << ' ' << std::endl;
+				}
 			}
-			else {
-				setColor(8);
-				std::cout << " " << arr[i][n] << " ";
-			}
-			if (n == width - 1) {
-				setColor(8);
-				std::cout << ' ' << arr[i][width] << ' ' << std::endl;
+		}
+	}
+	else if (Color == BLACK)
+	{
+		for (int i = 0; i < height; ++i)
+		{
+			for (int n = 0; n < width; ++n)
+			{
+				if ((n + i) % 2 == 0) {
+					setColor(128);
+					std::cout << " " << arr[i][n] << " ";
+				}
+				else {
+					setColor(8);
+					std::cout << " " << arr[i][n] << " ";
+				}
+				if (n == width - 1) {
+					setColor(8);
+					std::cout << ' ' << arr[i][width] << ' ' << std::endl;
+				}
 			}
 		}
 	}
@@ -100,7 +125,7 @@ void Board::show(char arr[height][width + 1])
 
 
 
-void Board::move_figure(char arr[height][width + 1])
+void Board::move_figure(char arr[height][width + 1], int Color)
 {
 	int x_pos, y_pos;
 	char x_symbol = NULL,y_symbol = NULL;
@@ -115,21 +140,33 @@ void Board::move_figure(char arr[height][width + 1])
 
 	//std::cout << x_pos << std::endl;
 	//std::cout << y_pos << std::endl;
-	for (int i = 0; i < 16; ++i) {
-		pawn[i].getMove(x_pos, y_pos, arr);
+	if (Color == WHITE) {
+		for (int i = 0; i < 8; ++i) {
+			pawn[i].getMove(x_pos, y_pos, arr);
+		}
+		for (int i = 0; i < 2; i++)
+		{
+			rook[i].getMove(x_pos, y_pos, arr);
+			bishop[i].getMove(x_pos, y_pos, arr);
+			cavalary[i].getMove(x_pos, y_pos, arr);
+		}
+		queen[0].getMove(x_pos, y_pos, arr);
+		king[0].getMove(x_pos, y_pos, arr);
 	}
-
-	for (int i = 0; i < 4; i++)
-	{
-		rook[i].getMove(x_pos, y_pos, arr);
-		bishop[i].getMove(x_pos, y_pos, arr);
-		cavalary[i].getMove(x_pos, y_pos, arr);
+	else if (Color == BLACK) {
+		for (int i = 8; i < 16; ++i) {
+			pawn[i].getMove(x_pos % 7, y_pos, arr);
+		}
+		for (int i = 0; i < 4; i++)
+		{
+			rook[i].getMove(x_pos, y_pos, arr);
+			bishop[i].getMove(x_pos, y_pos, arr);
+			cavalary[i].getMove(x_pos, y_pos, arr);
+		}
+		queen[1].getMove(x_pos, y_pos, arr);
+		king[1].getMove(x_pos, y_pos, arr);
 	}
-
-	for (int i = 0; i < 2; ++i)
-	{
-		queen[i].getMove(x_pos, y_pos, arr);
-	}
+	
 
 	for (int i = 0; i < 16; ++i) 
 	{
@@ -140,6 +177,7 @@ void Board::move_figure(char arr[height][width + 1])
 			figure_colision_check(&bishop[i % 4], &bishop[n % 4]);
 			figure_colision_check(&cavalary[i % 4], &cavalary[n % 4]);
 
+			figure_colision_check(&king[i % 2], &pawn[n]);
 			figure_colision_check(&rook[i % 4], &pawn[n]);
 			figure_colision_check(&bishop[i % 4], &pawn[n]);
 			figure_colision_check(&cavalary[i % 4], &pawn[n]);
@@ -151,6 +189,10 @@ void Board::move_figure(char arr[height][width + 1])
 			figure_colision_check(&queen[i % 2], &bishop[n % 4]);
 			figure_colision_check(&queen[i % 2], &rook[n % 4]);
 			figure_colision_check(&queen[i % 2], &cavalary[n % 4]);
+			figure_colision_check(&king[i % 2], &rook[n % 4]);
+			figure_colision_check(&king[i % 2], &bishop[n % 4]);
+			figure_colision_check(&king[i % 2], &cavalary[n % 4]);
+			figure_colision_check(&king[i % 2], &queen[n % 2]);
 		}
 	}
 	figure_colision_check(&queen[0], &queen[1]);

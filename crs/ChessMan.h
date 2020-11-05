@@ -68,3 +68,13 @@ public:
 	~Queen() {}
 };
 
+class King :public ChessMan
+{
+public:
+	King() {}
+	void init(int x, int y, int Color) override;
+	void put(char arr[height][width + 1]) override;
+	void getMove(int x_pos, int y_pos, char arr[height][width + 1]) override;
+	~King() {}
+};
+
