@@ -28,7 +28,7 @@ void Pawn::getMove(int x_pos, int y_pos, char arr[height][width + 1])
 		int moves, * p_move = &moves;
 		int Enemy_Color, * p_Color = &Enemy_Color;
 
-		MoveFigureInput(x_move, y_move, "Пешка", Color);
+		MoveFigureInput(x_move, y_move, "РџРµС€РєР°", Color);
 
 		if (Color == WHITE) {
 			*p_move = 1;
@@ -86,7 +86,7 @@ void Rook::getMove(int x_pos, int y_pos, char arr[height][width + 1])
 		else if (Color == BLACK) 
 			*p_Color = WHITE;
 			
-		MoveFigureInput(x_move, y_move, "Ладья", Color);
+		MoveFigureInput(x_move, y_move, "Р›Р°РґСЊСЏ", Color);
 		if ((x != x_move) && (y == y_move))
 			Rook_Move_X(x, y, x_move, y_move, arr, Color, Enemy, isAttack);
 		else if ((x == x_move) && (y != y_move))
@@ -125,7 +125,7 @@ void Bishop::getMove(int x_pos, int y_pos, char arr[height][width + 1]) {
 		else if (Color == BLACK)
 			*p_Color = WHITE;
 
-		MoveFigureInput(x_move, y_move, "Слон", Color);
+		MoveFigureInput(x_move, y_move, "РЎР»РѕРЅ", Color);
 
 		if (((x + y) == (x_move + y_move)) || ((x - y) == (x_move - y_move))) 
 			Bishop_Move(x, y, x_move, y_move, arr, Color, Enemy, isAttack);
@@ -163,7 +163,7 @@ void Cavalary::getMove(int x_pos, int y_pos, char arr[height][width + 1]) {
 		else if (Color == BLACK)
 			*p_Color = WHITE;
 
-		MoveFigureInput(x_move, y_move, "Кавалерия", Color);
+		MoveFigureInput(x_move, y_move, "РљР°РІР°Р»РµСЂРёСЏ", Color);
 		if (((y == y_move + 2) || (y == y_move - 2)) && ((x == x_move + 1) || (x == x_move - 1)))
 		{
 			if (arr[y_move][x_move] == ' ') {
@@ -227,7 +227,7 @@ void Queen::getMove(int x_pos, int y_pos, char arr[height][width + 1])
 		else if (Color == BLACK)
 			*p_Color = WHITE;
 
-		MoveFigureInput(x_move, y_move, "Королева", Color);
+		MoveFigureInput(x_move, y_move, "РљРѕСЂРѕР»РµРІР°", Color);
 
 		if ((x != x_move) && (y == y_move))
 			Rook_Move_X(x, y, x_move, y_move, arr, Color, Enemy, isAttack);
@@ -270,7 +270,7 @@ void King::getMove(int x_pos, int y_pos, char arr[height][width + 1])
 		else if (Color == BLACK)
 			*p_Color = WHITE;
 
-		MoveFigureInput(x_move, y_move, "Король", Color);
+		MoveFigureInput(x_move, y_move, "РљРѕСЂРѕР»СЊ", Color);
 
 		if (((x == x_move) || (x == x_move + 1) || (x_move - 1)) && ((y == y_move) || (y == y_move + 1) || (y_move - 1)))
 		{
