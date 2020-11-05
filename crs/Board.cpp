@@ -5,9 +5,9 @@ Board::Board()
 	f1 = NULL;
 	f2 = NULL;
 	
-	//������������� �����
+	//инитиализация фигур
 
-	/**����� ������**/
+	/**Белые фигуры**/
 	for (int i = 0; i < 8; ++i) {
 		pawn[i].init(i, 1, WHITE);
 	}
@@ -20,7 +20,7 @@ Board::Board()
 	queen[0].init(4, 0, WHITE);
 	king[0].init(3, 0, WHITE);
 
-	/**������ ������**/
+	/**Черные фигуры**/
 	for (int i = 8; i < 16; ++i) {
 		pawn[i].init(i % 8, 6, BLACK);
 	}
@@ -37,6 +37,7 @@ Board::Board()
 
 void Board::init(char arr[height][width + 1])
 {
+	//инитифлизация доски пробелами
 	for (int n = 0; n < height; ++n) 
 	{
 		for (int i = 0; i < width; ++i)
@@ -47,7 +48,7 @@ void Board::init(char arr[height][width + 1])
 	for (int i = 0; i < 8; ++i)
 		arr[i][width] = '1' + i;
 	
-	//����� �����
+	//вывод фигур
 	for (int i = 0; i < 16; ++i)
 		pawn[i].put(arr);
 	
@@ -65,6 +66,7 @@ void Board::init(char arr[height][width + 1])
 
 void Board::show(char arr[height][width + 1],int Color)
 {
+	//здесь будуть символы 
 	char S = 'a';
 	for (int i = 0; i < 8; ++i) {
 		setColor(8);
@@ -72,18 +74,18 @@ void Board::show(char arr[height][width + 1],int Color)
 		S += 1;
 	}
 	std::cout << std::endl;
-	
+	//если мы играем за белых доска будет выводиться так
 	if (Color == WHITE) {
 		for (int i = height - 1; i >= 0; --i)
 		{
 			for (int n = 0; n < width; ++n)
 			{
 				if ((n + i) % 2 == 0) {
-					setColor(128);
+					setColor(128);//красим  в клетку в темный
 					std::cout << " " << arr[i][n] << " ";
 				}
 				else {
-					setColor(8);
+					setColor(8);//красим  в клетку в цвет поумолчанию
 					std::cout << " " << arr[i][n] << " ";
 				}
 				if (n == width - 1) {
@@ -92,8 +94,8 @@ void Board::show(char arr[height][width + 1],int Color)
 				}
 			}
 		}
-	}
-	else if (Color == BLACK)
+	}	
+	else if (Color == BLACK)//если мы играем за черных доска будет выводиться так
 	{
 		for (int i = 0; i < height; ++i)
 		{
@@ -130,16 +132,14 @@ void Board::move_figure(char arr[height][width + 1], int Color)
 	int x_pos, y_pos;
 	char x_symbol = NULL,y_symbol = NULL;
 
-	std::cout << "������ � ��������� ������: ";
+	std::cout << "Ведите х кординаты фигуры: ";
 	x_pos = _getch();
 	Symbol_Identy(x_pos);
 
-	std::cout << "������ y ��������� ������: ";
+	std::cout << "Ведите y кординаты фигуры: ";
 	y_pos = _getch();
 	Number_Identy(y_pos);
-
-	//std::cout << x_pos << std::endl;
-	//std::cout << y_pos << std::endl;
+	//управления фигурами
 	if (Color == WHITE) {
 		for (int i = 0; i < 8; ++i) {
 			pawn[i].getMove(x_pos, y_pos, arr);
@@ -167,7 +167,7 @@ void Board::move_figure(char arr[height][width + 1], int Color)
 		king[1].getMove(x_pos, y_pos, arr);
 	}
 	
-
+	//смотрим на точто фигуры атаковали или просто передвигалис по доске
 	for (int i = 0; i < 16; ++i) 
 	{
 		for (int n = 0; n < 16; ++n)
@@ -200,6 +200,7 @@ void Board::move_figure(char arr[height][width + 1], int Color)
 
 void Board::figure_colision_check(ChessMan* f1, ChessMan* f2)
 {
+	//смотрим на точто фигуры атаковали или просто передвигалис по доске
 	if ((f1 == 0) || (f2 == 0)) {  }
 	else {
 		if (f1->Color != f2->Color) 
