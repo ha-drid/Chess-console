@@ -1,80 +1,40 @@
-#pragma once
-#include "auxiliary.h"
-#include "move_figure_methods.h"
-
-class Board;
+#pragma once 
+#include <vector>
+#include <iostream>
+#include <cstring>
 
 class ChessMan
 {
 public:
 	ChessMan() {}
-	virtual void init(int x,int y,int Color) = 0;
-	virtual void put(char arr[height][width + 1]) = 0;
-	virtual void getMove(int x_pos, int y_pos, char arr[height][width + 1]) = 0;
+	virtual wchar_t put(int color) = 0;
+	virtual std::string get_moves(int x_pos, int y_pos, int x_move, int y_move, std::vector<std::vector<wchar_t>> arr) = 0;
 	virtual ~ChessMan() {}
-	friend Board;
-protected:
-	int x, y, Color;
-	bool isBoard, isAttack;
 };
 
-class Pawn :public ChessMan
+class ChessPawn: public ChessMan
 {
 public:
-	Pawn() {}
-	void init(int x, int y, int Color) override;
-	void put(char arr[height][width + 1]) override;
-	void getMove(int x_pos, int y_pos, char arr[height][width + 1]) override;
-	~Pawn() {}
+	ChessPawn() {}
+	wchar_t put(int color) override;
+	std::string get_moves(int x_pos, int y_pos, int x_move, int y_move, std::vector<std::vector<wchar_t>> arr) override;
+	~ChessPawn() {}
 };
 
-class Rook :public ChessMan
+class ChessKing :public ChessMan
 {
 public:
-	Rook() {}
-	void init(int x, int y, int Color) override;
-	void put(char arr[height][width + 1]) override;
-	void getMove(int x_pos, int y_pos, char arr[height][width + 1]) override;
-	~Rook() {}
+	ChessKing() {}
+	wchar_t put(int color) override;
+	std::string get_moves(int x_pos, int y_pos, int x_move, int y_move, std::vector<std::vector<wchar_t>> arr) override;
+	~ChessKing() {}
 };
 
-class Bishop : public ChessMan
+class ChessRook :public ChessMan
 {
 public:
-	Bishop() {}
-	void init(int x, int y, int Color) override;
-	void put(char arr[height][width + 1]) override;
-	void getMove(int x_pos, int y_pos, char arr[height][width + 1]) override;
-	~Bishop() {}
+	ChessRook() {}
+	wchar_t put(int color) override;
+	std::string get_moves(int x_pos, int y_pos, int x_move, int y_move, std::vector<std::vector<wchar_t>> arr) override;
+	~ChessRook() {}
 };
-
-class Cavalary :public ChessMan
-{
-public:
-	Cavalary() {}
-	void init(int x, int y, int Color) override;
-	void put(char arr[height][width + 1]) override;
-	void getMove(int x_pos, int y_pos, char arr[height][width + 1]) override;
-	~Cavalary() {}
-};
-
-class Queen :public ChessMan
-{
-public:
-	Queen() {}
-	void init(int x, int y, int Color) override;
-	void put(char arr[height][width + 1]) override;
-	void getMove(int x_pos, int y_pos, char arr[height][width + 1]) override;
-	~Queen() {}
-};
-
-class King :public ChessMan
-{
-public:
-	King() {}
-	void init(int x, int y, int Color) override;
-	void put(char arr[height][width + 1]) override;
-	void getMove(int x_pos, int y_pos, char arr[height][width + 1]) override;
-	~King() {}
-};
-

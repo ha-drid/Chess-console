@@ -2,37 +2,25 @@
 #include <Windows.h>
 #include <stdexcept>
 
-#include "auxiliary.h"
 #include "Board.h"
-#include "ChessMan.h"
-
-char map[height][width + 1];
-Board board;
-
 int main()
 {
-	setlocale(LC_ALL, "ru");
 	try
 	{
-		int n = WHITE;
-		while(1)
+		setlocale(0, "ru");
+		Board board;
+		board.init();
+		do
 		{
-			if(n == 3)
-				n %= 2;
-			board.init(map);
-			board.show(map, n);
-			board.move_figure(map, n);
-			Sleep(1000);
-			system("cls");
-			++n;
-		}
+			board.show();
+			board.get_moves_chessman();
+		}while (GetKeyState(VK_ESCAPE) >= 0);//для GetKeyState нужен файл Window.h
+
 	}
-	catch (const std::runtime_error& e)
+	catch (const std::runtime_error& e)//для runtime_error нужен файл stdexcept
 	{
-		std::cout << "except" << e.what() << std::endl;
+		std::cout << "Except" << e.what() << std::endl;
 		return -1;
 	}
-	
-
 	return 0;
 }

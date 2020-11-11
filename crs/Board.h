@@ -1,29 +1,25 @@
 #pragma once
-
-#ifndef BOARD
-
 #include <iostream>
-#include "auxiliary.h"
+
+#include "Cell.h"
 #include "ChessMan.h"
 
-class Board
+static const int width_map = 8;
+static const int height_map = 8;
+
+class Board 
 {
 public:
 	Board();
-	void init(char arr[height][width + 1]);					
-	void show(char arr[height][width + 1], int Color);
-	void move_figure(char arr[height][width + 1], int Color);
-	void figure_colision_check(ChessMan* f1, ChessMan* f2);
+	void init();
+	void show();
+	wchar_t get_chessman(int x, int y);
+	void get_moves_chessman();
 	~Board();
 private:
-	ChessMan* f1, * f2;
-	Pawn pawn[16];
-	Rook rook[4];
-	Bishop bishop[4];
-	Cavalary cavalary[4];
-	Queen queen[2];
-	King king[2];
+	std::vector<std::vector<wchar_t>> map;
+	Cell cell;
+	ChessPawn pawn;
+	ChessKing king;
+	ChessRook rook;
 };
-
-#define BOARD
-#endif

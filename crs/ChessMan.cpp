@@ -1,289 +1,174 @@
 #include "ChessMan.h"
+#include "Color.h"
 
-void Pawn::init(int x, int y, int Color)
+static int width_map = 8;
+static int height_map = 8;
+
+wchar_t ChessPawn::put(int color)
 {
-	this->x = x;
-	this->y = y;
-	this->Color = Color;
-	isAttack = false;
-	isBoard = true;
+	if (color == 1)
+		return L'P';
+	else if (color == 2)
+		return L'p';
+	else
+		return L'~';
 }
 
-void Pawn::put(char arr[height][width + 1])
+std::string ChessPawn::get_moves(int x_pos, int y_pos, int x_move, int y_move, std::vector<std::vector<wchar_t>> arr)
 {
-	if (isBoard)
-	{
-		if (Color == WHITE)
-			arr[y][x] = chess_f[0][Color];
-		else if (Color == BLACK)
-			arr[y][x] = chess_f[0][Color];
+	int cnt, * p_cnt = &cnt;
+	int self_color = get_color(x_pos, y_pos, arr);//свой цвет
+	int enemy_color, * p_enemy_color = &enemy_color;
+	int iY_pos; //изначалная позиция 
+	int* p_iY_pos = &iY_pos; // указатель на верхнюю переменую
+
+	if (self_color == White) {
+		*p_cnt = 1;
+		*p_iY_pos = 1;
+		*p_enemy_color = Black;
 	}
+	else if (self_color == Black) {
+		*p_cnt = -1;
+		*p_iY_pos = 6;
+		*p_enemy_color = White;
+	}
+	
+	//если мы правильно ведем позиция куда нужно идти то возвратиться "Yes", а иначе "No"
+	if ((y_pos + cnt == y_move) && (x_pos == x_move) && (get_color(x_move, y_move, arr) == Empty))
+		return "yes";
+	else if ((y_pos + (cnt * 2) == y_move) && (x_pos == x_move) && (get_color(x_move, y_move, arr) == Empty) && (get_color(x_move, y_move + cnt, arr) == Empty) && (y_pos == iY_pos))
+		return "yes";
+	else if ((y_pos + cnt == y_move) && ((x_pos - 1== x_move) || (x_pos + 1 == x_move)) && (get_color(x_move, y_move, arr) == enemy_color))
+		return "yes";
+	else
+		return "no";
 }
 
-void Pawn::getMove(int x_pos, int y_pos, char arr[height][width + 1])
+wchar_t ChessKing::put(int color)
 {
-	if ((x_pos == x) && (y_pos == y) && (isBoard))
-	{
-		int x_move, y_move;
-		int moves, * p_move = &moves;
-		int Enemy_Color, * p_Color = &Enemy_Color;
+	if (color == 1)
+		return L'K';
+	else if (color == 2)
+		return L'k';
+	else
+		return L'~';
+}
 
-		MoveFigureInput(x_move, y_move, "Пешка", Color);
+std::string ChessKing::get_moves(int x_pos, int y_pos, int x_move, int y_move, std::vector<std::vector<wchar_t>> arr)
+{
+	int self_color = get_color(x_pos, y_pos, arr);//свой цвет
+	int enemy_color; //цвет вражеской армии
+	int *p_enemy_color = &enemy_color; 
+	//здесь мы должны инитиализировать переменые если какого они цвета 
+	if (self_color == White) {
+		*p_enemy_color = Black;
+	}
+	else if (self_color == Black) {
+		*p_enemy_color = White;
+	}
+	
+	if (((x_pos == x_move) || (x_pos + 1 == x_move) || (x_pos - 1 == x_move)) &&
+		((y_pos == y_move) || (y_pos + 1 == y_move) || (y_pos - 1 == y_move)) &&
+		((get_color(x_move, y_move, arr) == Empty) || (get_color(x_move, y_move, arr) == enemy_color))) {
+		return "yes";
+	}
+	else
+		return "no";
+}
 
-		if (Color == WHITE) {
-			*p_move = 1;
-			*p_Color = BLACK;
+wchar_t ChessRook::put(int color)
+{
+	if (color == 1)
+		return L'R';
+	else if (color == 2)
+		return L'r';
+	else
+		return L'~';
+}
+
+std::string ChessRook::get_moves(int x_pos, int y_pos, int x_move, int y_move, std::vector<std::vector<wchar_t>> arr)
+{
+	int self_color = get_color(x_pos, y_pos, arr);//свой цвет
+	int enemy_color; //цвет вражеской армии
+	int* p_enemy_color = &enemy_color;
+	int cnt, i;
+	int min, max;
+	int* p_min = &min, * p_max = &max;
+	int* p_cnt = &cnt;
+	std::string succes = "no";
+	std::string* p_succes = &succes;
+
+	//здесь мы должны инитиализировать переменые если какого они цвета 
+	if (self_color == White) {
+		*p_enemy_color = Black;
+	}
+	else if (self_color == Black) {
+		*p_enemy_color = White;
+	}
+	//движения по оси Х 
+	if ((x_pos != x_move) && (y_pos == y_move)) {
+		//узнаем какая переменая болье или меньше
+		if (x_pos < x_move) {
+			*p_cnt = 1;
+			*p_min = x_pos;
+			*p_max = x_move;
 		}
-		else {
-			*p_move = -1;
-			*p_Color = WHITE;
+		else if (x_pos > x_move) {
+			*p_cnt = -1;
+			*p_min = x_move;
+			*p_max = x_pos;
 		}
 
-		if (((y + moves) == y_move) && (arr[y + moves][x] == ' ') && (x == x_move))
-			y = y_move;
-		else if (((y + (moves * 2)) == y_move) && (arr[y + moves][x] == ' ') && (arr[y + (moves * 2)][x] == ' ') && ((y == 1) || (y == 6)) && (x == x_move))
-			y = y_move;
-		else if (((y + moves) == y_move) && (((x - 1) == x_move) || (x + 1) == x_move)) {
-			for(int i = 0;i < 5;++i)
-				if (arr[y_move][x_move] == chess_f[i][Enemy_Color]) {
-					x = x_move;
-					y = y_move;
-					isAttack = true;
+		i = x_pos + cnt;
+		if ((get_color(x_move, y_pos, arr) == Empty) || (get_color(x_move, y_pos, arr) == enemy_color))
+			while (min <= i <= max)
+			{
+				if (i == x_move)
+					*p_succes = "yes";
+
+				if (get_color(i, y_move, arr) == Empty)
+					i += cnt;
+				else 
+					break;
+				
+			}
+		else if (get_color(x_move, y_move, arr) == self_color)
+			std::cout << "бей своих чтобы чужие боялись\n\n";
+	}
+	//движения по оси У
+	else if ((x_pos == x_move) && (y_pos != y_move)) {
+		//узнаем какая переменая болье или меньше
+		if (y_pos < y_move) {
+			*p_cnt = 1;
+			*p_min = y_pos;
+			*p_max = y_move;
+		}
+		else if (y_pos > y_move) {
+			*p_cnt = -1;
+			*p_min = y_move;
+			*p_max = y_pos;
+		}
+		
+		i = y_pos + cnt;
+		if ((get_color(x_pos, y_move, arr) == Empty) || (get_color(x_pos, y_move, arr) == enemy_color))
+			while (min <= i <= max)
+			{
+				if (i == y_move) {
+					*p_succes = "yes";
+					break;
 				}
-		}
-	}
-}
 
-void Rook::init(int x, int y, int Color)
-{
-	this->x = x;
-	this->y = y;
-	this->Color = Color;
-	isAttack = false;
-	isBoard = true;
-}
+				if (get_color(x_move, i, arr) == Empty)
+					i += cnt;
+				else
+					break;
 
-void Rook::put(char arr[height][width + 1])
-{
-	if (isBoard)
-	{
-		if (Color == WHITE)
-			arr[y][x] = chess_f[1][Color];
-		else if (Color == BLACK)
-			arr[y][x] = chess_f[1][Color];
-	}
-}
-
-void Rook::getMove(int x_pos, int y_pos, char arr[height][width + 1])
-{
-	if ((x_pos == x) && (y_pos == y) && (isBoard))
-	{
-		int x_move, y_move;
-		int Enemy, * p_Color = &Enemy;
-
-		if (Color == WHITE) 
-			*p_Color = BLACK;
-		else if (Color == BLACK) 
-			*p_Color = WHITE;
-			
-		MoveFigureInput(x_move, y_move, "Ладья", Color);
-		if ((x != x_move) && (y == y_move))
-			Rook_Move_X(x, y, x_move, y_move, arr, Color, Enemy, isAttack);
-		else if ((x == x_move) && (y != y_move))
-			Rook_Move_Y(x, y, x_move, y_move, arr, Color, Enemy, isAttack);
-	}
-}
-
-void Bishop::init(int x, int y, int Color)
-{
-	this->x = x;
-	this->y = y;
-	this->Color = Color;
-	isAttack = false;
-	isBoard = true;
-}
-
-void Bishop::put(char arr[height][width + 1])
-{
-	if (isBoard)
-	{
-		if (Color == WHITE)
-			arr[y][x] = chess_f[3][Color];
-		else if (Color == BLACK)
-			arr[y][x] = chess_f[3][Color];
-	}
-}
-
-void Bishop::getMove(int x_pos, int y_pos, char arr[height][width + 1]) {
-	if ((x_pos == x) && (y_pos == y) && (isBoard))
-	{
-		int x_move, y_move;
-		int Enemy, * p_Color = &Enemy;
-
-		if (Color == WHITE)
-			*p_Color = BLACK;
-		else if (Color == BLACK)
-			*p_Color = WHITE;
-
-		MoveFigureInput(x_move, y_move, "Слон", Color);
-
-		if (((x + y) == (x_move + y_move)) || ((x - y) == (x_move - y_move))) 
-			Bishop_Move(x, y, x_move, y_move, arr, Color, Enemy, isAttack);
-	}
-}
-
-void Cavalary::init(int x, int y, int Color)
-{
-	this->x = x;
-	this->y = y;
-	this->Color = Color;
-	isAttack = false;
-	isBoard = true;
-}
-
-void Cavalary::put(char arr[height][width + 1])
-{
-	if (isBoard)
-	{
-		if (Color == WHITE)
-			arr[y][x] = chess_f[2][Color];
-		else if (Color == BLACK)
-			arr[y][x] = chess_f[2][Color];
-	}
-}
-
-void Cavalary::getMove(int x_pos, int y_pos, char arr[height][width + 1]) {
-	if ((x_pos == x) && (y_pos == y) && (isBoard))
-	{
-		int x_move, y_move;
-		int Enemy, * p_Color = &Enemy;
-
-		if (Color == WHITE)
-			*p_Color = BLACK;
-		else if (Color == BLACK)
-			*p_Color = WHITE;
-
-		MoveFigureInput(x_move, y_move, "Кавалерия", Color);
-		if (((y == y_move + 2) || (y == y_move - 2)) && ((x == x_move + 1) || (x == x_move - 1)))
-		{
-			if (arr[y_move][x_move] == ' ') {
-				x = x_move;
-				y = y_move;
 			}
-			for (int i = 0; i < 5; ++i){
-				if (arr[y_move][x_move] == chess_f[i][Enemy]) {
-					x = x_move;
-					y = y_move;
-					isAttack = true;
-				}
-			}
-		}
-		if (((y == y_move + 1) || (y == y_move - 1)) && ((x == x_move + 2) || (x == x_move - 2)))
-		{
-			if (arr[y_move][x_move] == ' ') {
-				x = x_move;
-				y = y_move;
-			}
-			for (int i = 0; i < 5; ++i) {
-				if (arr[y_move][x_move] == chess_f[i][Enemy]) {
-					x = x_move;
-					y = y_move;
-					isAttack = true;
-				}
-			}
-		}
+		else if (get_color(x_move, y_move, arr) == self_color)
+			std::cout << "бей своих чтобы чужие боялись\n\n";
 	}
-}
-
-void Queen::init(int x, int y, int Color)
-{
-	this->x = x;
-	this->y = y;
-	this->Color = Color;
-	isAttack = false;
-	isBoard = true;
-}
-
-void Queen::put(char arr[height][width + 1])
-{
-	if (isBoard)
-	{
-		if (Color == WHITE)
-			arr[y][x] = chess_f[4][Color];
-		else if (Color == BLACK)
-			arr[y][x] = chess_f[4][Color];
-	}
-}
-
-void Queen::getMove(int x_pos, int y_pos, char arr[height][width + 1])
-{
-	if ((x_pos == x) && (y_pos == y) && (isBoard))
-	{
-		int x_move, y_move;
-		int Enemy, * p_Color = &Enemy;
-
-		if (Color == WHITE)
-			*p_Color = BLACK;
-		else if (Color == BLACK)
-			*p_Color = WHITE;
-
-		MoveFigureInput(x_move, y_move, "Королева", Color);
-
-		if ((x != x_move) && (y == y_move))
-			Rook_Move_X(x, y, x_move, y_move, arr, Color, Enemy, isAttack);
-		else if ((x == x_move) && (y != y_move))
-			Rook_Move_Y(x, y, x_move, y_move, arr, Color, Enemy, isAttack);
-		else if (((x + y) == (x_move + y_move)) || ((x - y) == (x_move - y_move)))
-			Bishop_Move(x, y, x_move, y_move, arr, Color, Enemy, isAttack);
-	}
-}
-
-void King::init(int x, int y, int Color)
-{
-	this->x = x;
-	this->y = y;
-	this->Color = Color;
-	isAttack = false;
-	isBoard = true;
-}
-
-void King::put(char arr[height][width + 1])
-{
-	if (isBoard)
-	{
-		if (Color == WHITE)
-			arr[y][x] = chess_f[5][Color];
-		else if (Color == BLACK)
-			arr[y][x] = chess_f[5][Color];
-	}
-}
-
-void King::getMove(int x_pos, int y_pos, char arr[height][width + 1])
-{
-	if ((x_pos == x) && (y_pos == y) && (isBoard))
-	{
-		int x_move, y_move;
-		int Enemy, * p_Color = &Enemy;
-
-		if (Color == WHITE)
-			*p_Color = BLACK;
-		else if (Color == BLACK)
-			*p_Color = WHITE;
-
-		MoveFigureInput(x_move, y_move, "Король", Color);
-
-		if (((x == x_move) || (x == x_move + 1) || (x_move - 1)) && ((y == y_move) || (y == y_move + 1) || (y_move - 1)))
-		{
-			if (arr[y_move][x_move] == ' ') {
-				x = x_move;
-				y = y_move;
-			}
-			for(int i = 0;i < 5;++i)
-				if (arr[y_move][x_move] == chess_f[i][Enemy]) {
-					isAttack = true;
-					x = x_move;
-					y = y_move;
-				}
-		}
-	}
+	if (succes == "yes")//если succes равен "yes" то возвратиься "yes"
+		return "yes";
+	else
+		return "no";
 }

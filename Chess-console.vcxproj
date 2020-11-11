@@ -19,12 +19,15 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="crs\auxiliary.h" />
+    <ClInclude Include="crs\Cell.h" />
     <ClInclude Include="crs\Board.h" />
     <ClInclude Include="crs\ChessMan.h" />
+    <ClInclude Include="crs\Color.h" />
     <ClInclude Include="crs\move_figure_methods.h" />
+    <ClInclude Include="crs\printer.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="crs\Cell.cpp" />
     <ClCompile Include="crs\Board.cpp" />
     <ClCompile Include="crs\ChessMan.cpp" />
     <ClCompile Include="crs\main.cpp" />
