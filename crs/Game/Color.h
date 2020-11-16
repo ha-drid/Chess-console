@@ -38,7 +38,7 @@ static int get_color(int x, int y, wchar_t arr[Height_Map][Width_Map])
 	return *p_color;
 }
 
-//для покраски текста
+//РґР»СЏ РїРѕРєСЂР°СЃРєРё С‚РµРєСЃС‚Р°
 static HANDLE hwnd = GetStdHandle(STD_OUTPUT_HANDLE);
 static void fillColor(int fillcolor)
 {
