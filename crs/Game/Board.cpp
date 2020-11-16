@@ -41,7 +41,7 @@ void Board::init()
 
 void Board::show(int color)
 {
-	//эта операция выводит буквы
+	//СЌС‚Р° РѕРїРµСЂР°С†РёСЏ РІС‹РІРѕРґРёС‚ Р±СѓРєРІС‹
 	char alfabet = 'A';
 	std::cout << "   ";
 	for (int i = 1; i <= 8; ++i) {
@@ -96,7 +96,7 @@ void Board::show(int color)
 	}
 	
 	fillColor(7);
-	//эта операция выводит буквы
+	//СЌС‚Р° РѕРїРµСЂР°С†РёСЏ РІС‹РІРѕРґРёС‚ Р±СѓРєРІС‹
 	alfabet = 'A';
 	std::cout << "   ";
 	for (int i = 1; i <= 8; ++i) {
@@ -110,36 +110,36 @@ void Board::get_moves_chessman(int color)
 {
 	int x_pos, y_pos;
 
-	std::cout << "Ведите х кординату: ";
+	std::cout << "Р’РµРґРёС‚Рµ С… РєРѕСЂРґРёРЅР°С‚Сѓ: ";
 	x_pos = _getch();
 	symbol_identy(x_pos);
 
-	std::cout << "Ведите у кординату: ";
+	std::cout << "Р’РµРґРёС‚Рµ Сѓ РєРѕСЂРґРёРЅР°С‚Сѓ: ";
 	y_pos = _getch();
 	number_identy(y_pos);
 
 	if (color == White) {
-		chessman_move(White, x_pos, y_pos, "пешка", &pawn);
-		chessman_move(White, x_pos, y_pos, "кароль", &king);
-		chessman_move(White, x_pos, y_pos, "ладья", &rook);
-		chessman_move(White, x_pos, y_pos, "слон", &bishop);
-		chessman_move(White, x_pos, y_pos, "кавалерия", &cavalary);
-		chessman_move(White, x_pos, y_pos, "каралева", &queen);
+		chessman_move(White, x_pos, y_pos, "РїРµС€РєР°", &pawn);
+		chessman_move(White, x_pos, y_pos, "РєР°СЂРѕР»СЊ", &king);
+		chessman_move(White, x_pos, y_pos, "Р»Р°РґСЊСЏ", &rook);
+		chessman_move(White, x_pos, y_pos, "СЃР»РѕРЅ", &bishop);
+		chessman_move(White, x_pos, y_pos, "РєР°РІР°Р»РµСЂРёСЏ", &cavalary);
+		chessman_move(White, x_pos, y_pos, "РєР°СЂР°Р»РµРІР°", &queen);
 	}
 	else if (color == Black) {
-		chessman_move(Black, x_pos, y_pos, "пешка", &pawn);
-		chessman_move(Black, x_pos, y_pos, "кароль", &king);
-		chessman_move(Black, x_pos, y_pos, "ладья", &rook);
-		chessman_move(Black, x_pos, y_pos, "слон", &bishop);
-		chessman_move(Black, x_pos, y_pos, "кавалерия", &cavalary);
-		chessman_move(Black, x_pos, y_pos, "каралева", &queen);
+		chessman_move(Black, x_pos, y_pos, "РїРµС€РєР°", &pawn);
+		chessman_move(Black, x_pos, y_pos, "РєР°СЂРѕР»СЊ", &king);
+		chessman_move(Black, x_pos, y_pos, "Р»Р°РґСЊСЏ", &rook);
+		chessman_move(Black, x_pos, y_pos, "СЃР»РѕРЅ", &bishop);
+		chessman_move(Black, x_pos, y_pos, "РєР°РІР°Р»РµСЂРёСЏ", &cavalary);
+		chessman_move(Black, x_pos, y_pos, "РєР°СЂР°Р»РµРІР°", &queen);
 	}
 }
-//Движения фигуры.Чтобы код не дублировался
+//Р”РІРёР¶РµРЅРёСЏ С„РёРіСѓСЂС‹.Р§С‚РѕР±С‹ РєРѕРґ РЅРµ РґСѓР±Р»РёСЂРѕРІР°Р»СЃСЏ
 void Board::chessman_move(int color, int x_pos, int y_pos, std::string name_figure, ChessMan* f)
 {
 	if (f == NULL) {
-		std::cout << "Ошибка нет такой фигуры\n";
+		std::cout << "РћС€РёР±РєР° РЅРµС‚ С‚Р°РєРѕР№ С„РёРіСѓСЂС‹\n";
 	}
 	else {
 		if (chessman_is_cell(x_pos, y_pos, map) == f->put(color)) {
