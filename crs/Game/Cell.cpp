@@ -13,7 +13,7 @@ char Cell::put()
 
 void Cell::getmove()
 {
-	std::cout << "Çäåñü ïóñòàÿ êëåòêà\n";
+	std::cout << "Ð—Ð´ÐµÑÑŒ Ð¿ÑƒÑÑ‚Ð°Ñ ÐºÐ»ÐµÑ‚ÐºÐ°\n";
 }
 
 Cell::~Cell()
