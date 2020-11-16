@@ -75,13 +75,13 @@ static void number_identy(int& y)
 
 static void move_figure_input(int& x, int& y,std::string name_figure)
 {
-	std::cout << "Òåïåğü ïîä âàøèì êîíòğîëåì " << name_figure << std::endl;
+	std::cout << "Ğ¢ĞµĞ¿ĞµÑ€ÑŒ Ğ¿Ğ¾Ğ´ Ğ²Ğ°ÑˆĞ¸Ğ¼ ĞºĞ¾Ğ½Ñ‚Ñ€Ğ¾Ğ»ĞµĞ¼ " << name_figure << std::endl;
 
-	std::cout << "Âåäèòå x êîğäèíàòó:";
+	std::cout << "Ğ’ĞµĞ´Ğ¸Ñ‚Ğµ x ĞºĞ¾Ñ€Ğ´Ğ¸Ğ½Ğ°Ñ‚Ñƒ:";
 	x = _getch();
 	symbol_identy(x);
 
-	std::cout << "Âåäèòå y êîğäèíàòó:";
+	std::cout << "Ğ’ĞµĞ´Ğ¸Ñ‚Ğµ y ĞºĞ¾Ñ€Ğ´Ğ¸Ğ½Ğ°Ñ‚Ñƒ:";
 	y = _getch();
 	number_identy(y);
 }
