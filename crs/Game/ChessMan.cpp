@@ -15,9 +15,9 @@ wchar_t ChessPawn::put(int color)
 std::string ChessPawn::get_moves(int x_pos, int y_pos, int x_move, int y_move, wchar_t arr[Height_Map][Width_Map])
 {
 	int cnt, * p_cnt = &cnt;
-	int self_color = get_color(x_pos, y_pos, arr);//свой цвет
+	int self_color = get_color(x_pos, y_pos, arr);//СЃРІРѕР№ С†РІРµС‚
 	std::shared_ptr<int> p_EnemyColor(new int());
-	std::shared_ptr<int> p_iy_pos(new int ()); //Изначальная позиция. Это делается для того чтобы пешка могла ходить свой первый ход в две клетки
+	std::shared_ptr<int> p_iy_pos(new int ()); //РР·РЅР°С‡Р°Р»СЊРЅР°СЏ РїРѕР·РёС†РёСЏ. Р­С‚Рѕ РґРµР»Р°РµС‚СЃСЏ РґР»СЏ С‚РѕРіРѕ С‡С‚РѕР±С‹ РїРµС€РєР° РјРѕРіР»Р° С…РѕРґРёС‚СЊ СЃРІРѕР№ РїРµСЂРІС‹Р№ С…РѕРґ РІ РґРІРµ РєР»РµС‚РєРё
 
 	if (self_color == White) {
 		*p_cnt = 1;
@@ -30,7 +30,7 @@ std::string ChessPawn::get_moves(int x_pos, int y_pos, int x_move, int y_move, w
 		*p_EnemyColor = White;
 	}
 	
-	//если мы правильно ведем позиция куда нужно идти то возвратиться "Yes", а иначе "No"
+	//РµСЃР»Рё РјС‹ РїСЂР°РІРёР»СЊРЅРѕ РІРµРґРµРј РїРѕР·РёС†РёСЏ РєСѓРґР° РЅСѓР¶РЅРѕ РёРґС‚Рё С‚Рѕ РІРѕР·РІСЂР°С‚РёС‚СЊСЃСЏ "Yes", Р° РёРЅР°С‡Рµ "No"
 	if ((y_pos + cnt == y_move) && (x_pos == x_move) && (get_color(x_move, y_move, arr) == Empty))
 		return "yes";
 	else if ((y_pos + (cnt * 2) == y_move) && (x_pos == x_move) && (get_color(x_move, y_move, arr) == Empty) && (get_color(x_move, y_pos + cnt, arr) == Empty) && (y_pos == *p_iy_pos))
@@ -53,9 +53,10 @@ wchar_t ChessKing::put(int color)
 
 std::string ChessKing::get_moves(int x_pos, int y_pos, int x_move, int y_move, wchar_t arr[Height_Map][Width_Map])
 {
-	int self_color = get_color(x_pos, y_pos, arr);//свой цвет
-	std::shared_ptr<int> p_EnemyColor(new int()); //цвет вражеской армии
-	//здесь мы должны инитиализировать переменые если какого они цвета 
+	int self_color = get_color(x_pos, y_pos, arr);//СЃРІРѕР№ С†РІРµС‚
+	std::shared_ptr<int> p_EnemyColor(new int()); //С†РІРµС‚ РІСЂР°Р¶РµСЃРєРѕР№ Р°СЂРјРёРё
+
+	//Р·РґРµСЃСЊ РјС‹ РґРѕР»Р¶РЅС‹ РёРЅРёС‚РёР°Р»РёР·РёСЂРѕРІР°С‚СЊ РїРµСЂРµРјРµРЅС‹Рµ РµСЃР»Рё РєР°РєРѕРіРѕ РѕРЅРё С†РІРµС‚Р°
 	if (self_color == White) {
 		*p_EnemyColor = Black;
 	}
@@ -84,7 +85,7 @@ wchar_t ChessRook::put(int color)
 
 std::string ChessRook::get_moves(int x_pos, int y_pos, int x_move, int y_move, wchar_t arr[Height_Map][Width_Map])
 {
-	int self_color = get_color(x_pos, y_pos, arr);//свой цвет
+	int self_color = get_color(x_pos, y_pos, arr);//СЃРІРѕР№ С†РІРµС‚
 	std::shared_ptr<int> p_EnemyColor(new int());
 	std::shared_ptr<int> p_Cnt(new int());
 	std::shared_ptr<int> p_iY(new int());
@@ -95,15 +96,15 @@ std::string ChessRook::get_moves(int x_pos, int y_pos, int x_move, int y_move, w
 	std::shared_ptr<int> p_I(new int());
 	std::shared_ptr<std::string> p_Succes(new std::string("no"));
 
-	//здесь мы должны инитиализировать переменые если какого они цвета 
+	//Р·РґРµСЃСЊ РјС‹ РґРѕР»Р¶РЅС‹ РёРЅРёС‚РёР°Р»РёР·РёСЂРѕРІР°С‚СЊ РїРµСЂРµРјРµРЅС‹Рµ РµСЃР»Рё РєР°РєРѕРіРѕ РѕРЅРё С†РІРµС‚Р° 
 	if (self_color == White) {
 		*p_EnemyColor = Black;
 	}
 	else if (self_color == Black) {
 		*p_EnemyColor = White;
 	}
-	if ((x_pos != x_move) && (y_pos == y_move)) {//движения по оси Х 
-		//узнаем какая переменая больше или меньше
+	if ((x_pos != x_move) && (y_pos == y_move)) {//РґРІРёР¶РµРЅРёСЏ РїРѕ РѕСЃРё РҐ 
+		//СѓР·РЅР°РµРј РєР°РєР°СЏ РїРµСЂРµРјРµРЅР°СЏ Р±РѕР»СЊС€Рµ РёР»Рё РјРµРЅСЊС€Рµ
 		if (x_pos < x_move) {
 			*p_Cnt = 1;
 			*p_Min = x_pos;
@@ -119,8 +120,8 @@ std::string ChessRook::get_moves(int x_pos, int y_pos, int x_move, int y_move, w
 		*p_iY = y_move;
 		*p_Pos = x_move;
 	}
-	else if ((x_pos == x_move) && (y_pos != y_move)) {//движения по оси У
-		//узнаем какая переменая больше или меньше
+	else if ((x_pos == x_move) && (y_pos != y_move)) {//РґРІРёР¶РµРЅРёСЏ РїРѕ РѕСЃРё Y
+		//СѓР·РЅР°РµРј РєР°РєР°СЏ РїРµСЂРµРјРµРЅР°СЏ Р±РѕР»СЊС€Рµ РёР»Рё РјРµРЅСЊС€Рµ
 		if (y_pos < y_move) {
 			*p_Cnt = 1;
 			*p_Min = y_pos;
@@ -151,8 +152,8 @@ std::string ChessRook::get_moves(int x_pos, int y_pos, int x_move, int y_move, w
 
 		}
 	else if (get_color(x_move, y_move, arr) == self_color)
-		std::cout << "бей своих чтобы чужие боялись\n\n";
-	return *p_Succes; //если p_succes равен "yes" то возвратиься "yes"
+		std::cout << "Р±РµР№ СЃРІРѕРёС… С‡С‚РѕР±С‹ С‡СѓР¶РёРµ Р±РѕСЏР»РёСЃСЊ\n\n";
+	return *p_Succes; //РµСЃР»Рё p_succes СЂР°РІРµРЅ "yes" С‚Рѕ РІРѕР·РІСЂР°С‚РёСЊСЃСЏ "yes"
 }
 
 wchar_t ChessBishop::put(int color)
@@ -167,7 +168,7 @@ wchar_t ChessBishop::put(int color)
 
 std::string ChessBishop::get_moves(int x_pos, int y_pos, int x_move, int y_move, wchar_t arr[Height_Map][Width_Map])
 {
-	int self_color = get_color(x_pos, y_pos, arr);//свой цвет
+	int self_color = get_color(x_pos, y_pos, arr);//СЃРІРѕР№ С†РІРµС‚
 	std::shared_ptr<int> p_EnemyColor(new int());
 	std::shared_ptr<int> p_yCnt(new int());
 	std::shared_ptr<int> p_xCnt(new int());
@@ -178,7 +179,7 @@ std::string ChessBishop::get_moves(int x_pos, int y_pos, int x_move, int y_move,
 	std::shared_ptr<int> p_yMax(new int());
 	std::shared_ptr<int> p_xMax(new int());
 	std::shared_ptr<std::string> p_Succes(new std::string("no"));
-	//здесь мы должны инитиализировать переменые если какого они цвета 
+	//Р·РґРµСЃСЊ РјС‹ РґРѕР»Р¶РЅС‹ РёРЅРёС‚РёР°Р»РёР·РёСЂРѕРІР°С‚СЊ РїРµСЂРµРјРµРЅС‹Рµ РµСЃР»Рё РєР°РєРѕРіРѕ РѕРЅРё С†РІРµС‚Р° 
 	if (self_color == White) {
 		*p_EnemyColor = Black;
 	}
@@ -255,7 +256,7 @@ wchar_t ChessCavalary::put(int color)
 
 std::string ChessCavalary::get_moves(int x_pos, int y_pos, int x_move, int y_move, wchar_t arr[Height_Map][Width_Map])
 {
-	int self_color = get_color(x_pos, y_pos, arr);//свой цвет
+	int self_color = get_color(x_pos, y_pos, arr);//СЃРІРѕР№ С†РІРµС‚
 	std::shared_ptr<int> p_EnemyColor(new int());
 	std::shared_ptr<std::string> p_Succes(new std::string("no"));
 
