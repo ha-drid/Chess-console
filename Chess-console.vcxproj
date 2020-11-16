@@ -19,18 +19,20 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="crs\Cell.h" />
-    <ClInclude Include="crs\Board.h" />
-    <ClInclude Include="crs\ChessMan.h" />
-    <ClInclude Include="crs\Color.h" />
-    <ClInclude Include="crs\move_figure_methods.h" />
+    <ClInclude Include="crs\Game\Cell.h" />
+    <ClInclude Include="crs\Game\Board.h" />
+    <ClInclude Include="crs\Game\ChessMan.h" />
+    <ClInclude Include="crs\Game\Color.h" />
     <ClInclude Include="crs\printer.h" />
+    <ClInclude Include="crs\size.h" />
+    <ClInclude Include="crs\Interface\Menu.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="crs\Cell.cpp" />
-    <ClCompile Include="crs\Board.cpp" />
-    <ClCompile Include="crs\ChessMan.cpp" />
+    <ClCompile Include="crs\Game\Cell.cpp" />
+    <ClCompile Include="crs\Game\Board.cpp" />
+    <ClCompile Include="crs\Game\ChessMan.cpp" />
     <ClCompile Include="crs\main.cpp" />
+    <ClCompile Include="crs\Interface\Menu.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -130,6 +132,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -144,6 +147,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

@@ -1,19 +1,37 @@
 #include <iostream>
 #include <Windows.h>
 #include <stdexcept>
+#include <memory>
 
-#include "Board.h"
+#include "Game/Color.h"
+#include "Game/Board.h"
+
+#include "Interface/Menu.h"
+
 int main()
 {
+	//for (int i = 0; i < 200; ++i) {
+	//	fillColor(i);
+	//	std::cout << i << "qwerty";
+	//}
+	//fillColor(7);
+	//std::cout << std::endl;
 	try
 	{
-		setlocale(0, "ru");
+		setlocale(LC_ALL, "ru");
 		Board board;
+		Menu m;
 		board.init();
+		int i = m.show();
+		int* p_i = &i;
+		system("cls");
 		do
 		{
-			board.show();
-			board.get_moves_chessman();
+			if (i == 3)
+				*p_i %= 2;
+			board.show(i);
+			board.get_moves_chessman(i);
+			++i;
 		}while (GetKeyState(VK_ESCAPE) >= 0);//для GetKeyState нужен файл Window.h
 
 	}

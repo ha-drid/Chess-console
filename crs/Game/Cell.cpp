@@ -8,7 +8,7 @@ Cell::Cell()
 
 char Cell::put()
 {
-	return L'.';
+	return L' ';
 }
 
 void Cell::getmove()
